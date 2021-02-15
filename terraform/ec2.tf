@@ -16,7 +16,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "master-node" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"    # Use t2.micro to start, can increase as req'd
+  instance_type = "t2.medium"    # Must have minimum 2 vCPUs on master node
   user_data     = var.env == "dev" ? file("./scripts/dev/user_data.sh") : file("./scripts/prod/user_data_master.sh")
   key_name      = var.key_name
 
