@@ -1,0 +1,22 @@
+{
+  "name": "tesla-automation-scheduler-backend",
+  "version": "1.0.0",
+  "description": "Schedule tasks and commands to control your Tesla vehicle via the Tesla API. This is the extension that you wish came with the Tesla app!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerry-hall/tesla-automation-scheduler.git"
+  },
+  "author": "Jerry Hall",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jerry-hall/tesla-automation-scheduler/issues"
+  },
+  "homepage": "https://github.com/jerry-hall/tesla-automation-scheduler#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
