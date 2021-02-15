@@ -33,3 +33,12 @@ sudo dpkg -i minikube_latest_amd64.deb
 
 # Start minikube
 minikube start
+
+
+
+# Deploy single node kubernetes cluster
+sleep 30
+cd /
+git clone https://github.com/jerry-hall/tesla-automation-scheduler
+cd /tesla-automation-scheduler; git pull
+kubectl apply -f /tesla-automation-scheduler/kubernetes
