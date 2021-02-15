@@ -3,6 +3,7 @@ provider "aws" {
 }
 
 terraform {
+  version = ">= 0.13"
   backend "s3" {
     bucket = "jhall-tfstate"
     key    = "tesla-automation-scheduler/terraform.tfstate"
