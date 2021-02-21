@@ -28,6 +28,12 @@ const schedule_command = async (request_body) => {
 };
 
 const execute_command = async (request_body) => {
+    // First, wake vehicle before executing any other commands
+    if (!wake_vehicle(request_body)) {
+        response = {'code':401, 'message': `Unable to wake vehicle`}
+        return response
+    }
+
     command = request_body['command']
     vehicle_id = request_body['vehicle_id']
     access_token = request_body['access_token']
@@ -54,6 +60,33 @@ const execute_command = async (request_body) => {
             response = {'code':401,'message':`${error}. Is your token valid?`}
         });
     return response
+}
+
+const wake_vehicle = async (request_body) => {
+    vehicle_id = request_body['vehicle_id']
+    access_token = request_body['access_token']
+    api_endpoint = get_api_endpoint(vehicle_id, "wake")
+
+    RETRIES = 0
+    MAX_RETRIES = 3
+
+    while (RETRIES < MAX_RETRIES) {
+        await axios
+            .post(api_endpoint, {}, {
+                headers: { Authorization: `Bearer ${access_token}` },
+            })
+            .then((res) => {
+                if (res.status == 200 && res['data'] && res['data']['response']['state'] == "online") {
+                    return true
+                } else {
+                    RETRIES++
+                }
+            })
+            .catch((error) => {
+                break
+            });
+        }
+    return false
 }
 
 module.exports = {

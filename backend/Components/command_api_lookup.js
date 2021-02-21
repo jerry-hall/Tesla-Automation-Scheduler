@@ -1,5 +1,6 @@
 const command_api_endpoint = {
-    "climate": "auto_conditioning_start"
+    "wake": "wake_up",
+    "climate": "command/auto_conditioning_start"
 }
 
 /**
@@ -11,7 +12,7 @@ const command_api_endpoint = {
  */
 const get_api_endpoint = (vehicle_id, key) => {
     if (key in command_api_endpoint) {
-        return `https://owner-api.teslamotors.com/api/1/vehicles/${vehicle_id}/command/${command_api_endpoint[key]}`
+        return `https://owner-api.teslamotors.com/api/1/vehicles/${vehicle_id}/${command_api_endpoint[key]}`
     } else {
         return null
     }
