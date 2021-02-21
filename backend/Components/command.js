@@ -2,7 +2,7 @@ const handle_command = async (request_body) => {
     var response
     var now = new Date()
     var now_str = now.toLocaleString('en-US', { timeZone: 'PST' })
-    var request_datetime = new Date(`${now_str.substring(0,now_str.search(','))}, ${response['execute_at']} PST`)
+    var request_datetime = new Date(`${now_str.substring(0,now_str.search(','))}, ${request_body['execute_at']} PST`)
     
     if (request_datetime - now <= 0) {
         switch (request_body['command']) {
@@ -12,7 +12,6 @@ const handle_command = async (request_body) => {
             case charging:
                 response = await execute_charging_command(request_body)
                 break;
-        
             default:
                 response = {'code':500, 'message': `Invalid command: ${request_body['command']}`}
         }
@@ -42,4 +41,6 @@ const execute_charging_command = async (request_body) => {
     return response
 };
 
-module.handle_command = handle_command
+module.exports = {
+    handle_command: handle_command
+}

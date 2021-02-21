@@ -4,4 +4,4 @@ const required_keys = [
     "execute_at"
 ]
 
-module.required_keys = required_keys
+module.exports = required_keys

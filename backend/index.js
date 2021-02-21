@@ -18,10 +18,10 @@ app.post('/api/1/command', async (req, res) => {
   var request_body = req.body
   var missing_elements = []
   required_keys.forEach(elem => {
-    if (request_body.includes(elem))
+    if (!(elem in request_body))
       missing_elements.push(elem)
   });
-  if (!missing_elements.length){
+  if (missing_elements.length > 0){
     return res.status(400).send({
       message: `Missing elements: ${missing_elements}` 
     })}
