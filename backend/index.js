@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
   })
 
-app.post('/api/1/command', (req, res) => {
+app.post('/api/1/command', async (req, res) => {
   var request_body = req.body
   var missing_elements = []
   required_keys.forEach(elem => {

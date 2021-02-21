@@ -1,4 +1,4 @@
-const handle_command = (request_body) => {
+const handle_command = async (request_body) => {
     var response
     var now = new Date()
     var now_str = now.toLocaleString('en-US', { timeZone: 'PST' })
@@ -24,19 +24,19 @@ const handle_command = (request_body) => {
     return response
 };
 
-const schedule_command = (request_body) => {
+const schedule_command = async (request_body) => {
     // TODO: Implement
     var response = {'code':200,'message': 'success'}
     return response
 };
 
-const execute_climate_command = (request_body) => {
+const execute_climate_command = async (request_body) => {
     // TODO: Implement
     var response = {'code':200,'message': 'success'}
     return response
 };
 
-const execute_charging_command = (request_body) => {
+const execute_charging_command = async (request_body) => {
     // TODO: Implement
     var response = {'code':200,'message': 'success'}
     return response
