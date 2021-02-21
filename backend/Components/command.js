@@ -3,7 +3,7 @@ const { response } = require('express');
 const get_api_endpoint = require('./command_api_lookup')
 
 const handle_command = async (request_body) => {
-    response
+    var response
     now = new Date()
     now_str = now.toLocaleString('en-US', { timeZone: 'PST' })
     request_datetime = new Date(`${now_str.substring(0,now_str.search(','))}, ${request_body['execute_at']} PST`)
