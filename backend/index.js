@@ -1,8 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const command = require('./command')
 const app = express()
 const port = 3000
+
+// Helpers:
+const command = require('./Components/command')
+const required_keys = require('./Components/required_keys')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -12,7 +15,6 @@ app.get('/', (req, res) => {
   })
 
 app.post('/api/1/command', (req, res) => {
-  const required_keys = ["access_token", "command", "execute_at"]
   var request_body = req.body
   var missing_elements = []
   required_keys.forEach(elem => {

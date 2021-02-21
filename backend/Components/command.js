@@ -1,4 +1,4 @@
-export const handle_command = (request_body) => {
+const handle_command = (request_body) => {
     var response
     var now = new Date()
     var now_str = now.toLocaleString('en-US', { timeZone: 'PST' })
@@ -41,3 +41,5 @@ const execute_charging_command = (request_body) => {
     var response = {'code':200,'message': 'success'}
     return response
 };
+
+module.handle_command = handle_command
