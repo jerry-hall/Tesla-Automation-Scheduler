@@ -5,7 +5,7 @@ const port = 3000
 
 // Helpers:
 const command = require('./Components/command')
-const required_keys = require('./Components/required_keys')
+const request_keys = require('./Components/request_keys')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 app.post('/api/1/command', async (req, res) => {
   var request_body = req.body
   var missing_elements = []
-  required_keys.forEach(elem => {
+  request_keys.forEach(elem => {
     if (!(elem in request_body))
       missing_elements.push(elem)
   });

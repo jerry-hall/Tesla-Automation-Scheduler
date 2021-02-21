@@ -1,7 +1,7 @@
-const required_keys = [
+const request_keys = [
     "access_token", 
     "command", 
     "execute_at"
 ]
 
-module.exports = required_keys
+module.exports = request_keys
