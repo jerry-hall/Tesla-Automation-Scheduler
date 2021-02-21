@@ -1,24 +1,22 @@
+const axios = require('axios');
+const { response } = require('express');
+const get_api_endpoint = require('./command_api_lookup')
+
 const handle_command = async (request_body) => {
-    var response
-    var now = new Date()
-    var now_str = now.toLocaleString('en-US', { timeZone: 'PST' })
-    var request_datetime = new Date(`${now_str.substring(0,now_str.search(','))}, ${request_body['execute_at']} PST`)
+    response
+    now = new Date()
+    now_str = now.toLocaleString('en-US', { timeZone: 'PST' })
+    request_datetime = new Date(`${now_str.substring(0,now_str.search(','))}, ${request_body['execute_at']} PST`)
     
     if (request_datetime - now <= 0) {
-        switch (request_body['command']) {
-            case climate:
-                response = await execute_climate_command(request_body)
-                break;
-            case charging:
-                response = await execute_charging_command(request_body)
-                break;
-            default:
-                response = {'code':500, 'message': `Invalid command: ${request_body['command']}`}
-        }
+        // request_datetime is at a time earlier than today,
+        // execute command now
+        response = await execute_command(request_body)
     } else {
+        // request_datetime is at a time later than today,
+        // execute command later
         response = await schedule_command(request_body)
     }
-    
 
     return response
 };
@@ -29,17 +27,34 @@ const schedule_command = async (request_body) => {
     return response
 };
 
-const execute_climate_command = async (request_body) => {
-    // TODO: Implement
-    var response = {'code':200,'message': 'success'}
-    return response
-};
+const execute_command = async (request_body) => {
+    command = request_body['command']
+    vehicle_id = request_body['vehicle_id']
+    access_token = request_body['access_token']
+    response = {'code':500,'message':null}
+    api_endpoint = get_api_endpoint(vehicle_id, command)
+    
+    if (!api_endpoint) {
+        response = {'code':401, 'message': `Invalid command: ${command}`}
+        return response
+    }
 
-const execute_charging_command = async (request_body) => {
-    // TODO: Implement
-    var response = {'code':200,'message': 'success'}
+    await axios
+        .post(api_endpoint, {}, {
+            headers: { Authorization: `Bearer ${access_token}` },
+        })
+        .then((res) => {
+            if (res.status == 200 && res['data'] && res['data']['response']['result']) {
+                response = {'code':res.status,'message':`successfully executed command: ${command}`}
+            } else {
+                response = {'code':res.status,'message':`Error: ${res}`}
+            }
+        })
+        .catch((error) => {
+            response = {'code':401,'message':`${error}. Is your token valid?`}
+        });
     return response
-};
+}
 
 module.exports = {
     handle_command: handle_command
