@@ -3,7 +3,7 @@ const { response } = require('express');
 const get_api_endpoint = require('./command_api_lookup')
 
 const handle_command = async (request_body) => {
-    response
+    var response
     now = new Date()
     now_str = now.toLocaleString('en-US', { timeZone: 'PST' })
     request_datetime = new Date(`${now_str.substring(0,now_str.search(','))}, ${request_body['execute_at']} PST`)
@@ -28,6 +28,7 @@ const schedule_command = async (request_body) => {
 };
 
 const execute_command = async (request_body) => {
+    var response
     // First, wake vehicle before executing any other commands
     if (!wake_vehicle(request_body)) {
         response = {'code':401, 'message': `Unable to wake vehicle`}
@@ -83,7 +84,7 @@ const wake_vehicle = async (request_body) => {
                 }
             })
             .catch((error) => {
-                break
+               RETRIES = 3 
             });
         }
     return false
