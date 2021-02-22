@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jerry-hall/tesla-automation-scheduler#readme",
   "dependencies": {
+    "aws-sdk": "^2.848.0",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1"
