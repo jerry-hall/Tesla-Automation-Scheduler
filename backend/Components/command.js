@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { response } = require('express');
 const get_api_endpoint = require('./command_api_lookup')
+const send_SQS_message = require('./send_SQS_message')
 
 const handle_command = async (request_body) => {
     var response
@@ -22,9 +23,7 @@ const handle_command = async (request_body) => {
 };
 
 const schedule_command = async (request_body) => {
-    // TODO: Implement
-    var response = {'code':200,'message': 'success'}
-    return response
+    return await send_SQS_message(request_body)
 };
 
 const execute_command = async (request_body) => {
