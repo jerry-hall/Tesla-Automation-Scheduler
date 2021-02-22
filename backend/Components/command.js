@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { response } = require('express');
-const get_api_endpoint = require('./command_api_lookup')
+const get_api_endpoint = require('./get_api_endpoint')
 const send_SQS_message = require('./send_SQS_message')
 
 const handle_command = async (request_body) => {
