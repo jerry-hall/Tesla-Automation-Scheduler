@@ -24,5 +24,12 @@ spec:
           npm install --save; \
           node index.js"
         ]
+        env:
+        - name: REGION
+          value: "{{REGION}}"         # Template; filled in by user_data script 
+        - name: APIVERSION
+          value: "{{APIVERSION}}"     # Template; filled in by user_data script 
+        - name: SQS_QUEUE_URL
+          value: "{{SQS_QUEUE_URL}}"  # Template; filled in by user_data script
         ports:
         - containerPort: 3000
